@@ -1,0 +1,20 @@
+Options -Indexes
+
+# Protect config/db.php from direct HTTP access (Apache 2.4 syntax)
+<Files "db.php">
+    Require all denied
+</Files>
+
+# CORS headers for the API (static index.html needs these)
+<IfModule mod_headers.c>
+    Header always set Access-Control-Allow-Origin "*"
+    Header always set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+    Header always set Access-Control-Allow-Headers "Content-Type"
+</IfModule>
+
+# OPTIONS preflight: return 200 directly without hitting PHP
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_METHOD} ^OPTIONS$
+    RewriteRule ^ - [R=200,L]
+</IfModule>
