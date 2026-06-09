@@ -1,5 +1,6 @@
 # ── Secrets & credentials ────────────────────────────────
 .vscode/sftp.json
+quote-of-the-day/config/db.php
 .env
 .env.*
 !.env.example
@@ -8,4 +9,34 @@
 .DS_Store
 .DS_Store?
 ._*
+.Spotlight-V100
+.Trashes
 Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# ── Logs ─────────────────────────────────────────────────
+*.log
+logs/
+error_log
+php_errors.log
+
+# ── PHP / Composer ────────────────────────────────────────
+vendor/
+composer.lock
+
+# ── IDE & editor ─────────────────────────────────────────
+.idea/
+*.swp
+*.swo
+*~
+
+# ── Uploads / user content ───────────────────────────────
+uploads/
+
+# ── Temporary files ───────────────────────────────────────
+tmp/
+temp/
+*.tmp
+*.bak
+*.cache
