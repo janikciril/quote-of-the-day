@@ -1,0 +1,11 @@
+# ── Secrets & credentials ────────────────────────────────
+.vscode/sftp.json
+.env
+.env.*
+!.env.example
+
+# ── OS files ─────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
