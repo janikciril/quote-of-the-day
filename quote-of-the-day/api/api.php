@@ -74,7 +74,10 @@ function is_safe(string $text): bool
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => json_encode(['input' => $text]),
+        CURLOPT_POSTFIELDS     => json_encode([
+            'model' => 'omni-moderation-latest',
+            'input' => $text,
+        ]),
         CURLOPT_HTTPHEADER     => [
             'Content-Type: application/json',
             'Authorization: Bearer ' . OPENAI_API_KEY,

@@ -1,6 +1,6 @@
 # ── Secrets & credentials ────────────────────────────────
 .vscode/sftp.json
-quote-of-the-day/config/db.php
+quote-of-the-day/config/config.php
 .env
 .env.*
 !.env.example
