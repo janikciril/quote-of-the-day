@@ -11,7 +11,9 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../config/config.php';
+
+session_start();
 
 // ── Helpers ───────────────────────────────────────────────
 
@@ -66,6 +68,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 function is_safe(string $text): bool
 {
+    $blocklist = WORD_BLOCKLIST;
+    $lower = mb_strtolower($text, 'UTF-8');
+    foreach ($blocklist as $word) {
+        if (str_contains($lower, $word)) {
+            return false;
+        }
+    }
+
     if (!defined('OPENAI_API_KEY') || OPENAI_API_KEY === 'sk-your-openai-key') {
         return true; // kein Key gesetzt → Moderation überspringen
     }
@@ -96,6 +106,23 @@ function is_safe(string $text): bool
 
     $body = json_decode($raw, true);
     return isset($body['results'][0]['flagged']) && $body['results'][0]['flagged'] === false;
+}
+
+// ── Blocklist-Bereinigung ──────────────────────────────────
+// Setzt approved Quotes mit gesperrten Wörtern automatisch auf pending.
+
+function cleanup_blocked_quotes(): void
+{
+    $blocklist = array_filter(WORD_BLOCKLIST);
+    if (empty($blocklist)) return;
+
+    $pdo = getPDO();
+    $conditions = implode(' OR ', array_map(
+        fn($w) => "LOWER(text) LIKE " . $pdo->quote('%' . mb_strtolower($w, 'UTF-8') . '%'),
+        $blocklist
+    ));
+
+    $pdo->exec("UPDATE quotes SET status = 'pending' WHERE status = 'approved' AND ($conditions)");
 }
 
 // ── Route: GET (alle Quotes) ──────────────────────────────
@@ -142,18 +169,14 @@ function post_submit(): void
         json_out(['error' => 'Maximal 140 Zeichen erlaubt.'], 422);
     }
 
-    $ip  = get_client_ip();
-    $pdo = getPDO();
-
-    // Rate-Limit: maximal 1 Spruch pro IP innerhalb von 60 Minuten
-    $check = $pdo->prepare(
-        'SELECT COUNT(*) FROM quotes
-         WHERE ip_address = :ip AND created_at > NOW() - INTERVAL 1 HOUR'
-    );
-    $check->execute([':ip' => $ip]);
-    if ((int) $check->fetchColumn() > 0) {
+    // Rate-Limit: pro Browser-Session maximal 1 Spruch pro RATE_LIMIT_SECONDS
+    $now = time();
+    if (isset($_SESSION['submitted_at']) && ($now - $_SESSION['submitted_at']) < RATE_LIMIT_SECONDS) {
         json_out(['error' => 'Chill mal! Nur ein Spruch pro Stunde!'], 429);
     }
+
+    $ip  = get_client_ip();
+    $pdo = getPDO();
 
     $safe   = is_safe($text);
     $status = $safe ? 'approved' : 'pending';
@@ -162,6 +185,8 @@ function post_submit(): void
         'INSERT INTO quotes (text, status, ip_address) VALUES (:text, :status, :ip)'
     );
     $stmt->execute([':text' => $text, ':status' => $status, ':ip' => $ip]);
+
+    $_SESSION['submitted_at'] = $now;
 
     $message = $safe
         ? 'Dein Spruch ist live!'
@@ -225,6 +250,7 @@ function post_vote(): void
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'GET') {
+    cleanup_blocked_quotes();
     isset($_GET['winner']) ? get_winner() : get_quotes();
 }
 
