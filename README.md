@@ -23,12 +23,8 @@ Für die physische Umsetzung kamen folgende Komponenten zum Einsatz:
 * Stromversorgung: Externes Netzteil (da die LEDs mehr Strom benötigen, als der ESP32 liefern kann)
 * Platine: Lochrasterplatine für die feste Verlötung der Komponenten
 
-4. Software & Code
 
-* Web-Technologien: [z.B. HTML, CSS, JavaScript, PHP/Node.js, Datenbank]
-* Mikrocontroller-Programmierung: [z.B. Arduino IDE, verwendete Bibliotheken für die Matrix wie PxMatrix oder ESP32-HUB75-MatrixPanel-I2S-DMA]
-
-5. Herausforderungen & Learnings
+4. Herausforderungen & Learnings
 
 Die Umsetzung des Projekts brachte einige unerwartete Hürden mit sich, insbesondere im Bereich der Hardware, Elektronik und des Gehäusebaus.
 
@@ -43,7 +39,7 @@ Dies erforderte ein Maß an Feinmotorik und Fingerspitzengefühl, das wir uns er
 Wetterfestigkeit und Gehäusebau
 Als ob die Elektronik nicht schon genug gewesen wäre, stellte uns das Gehäuse vor die nächste schwierige Aufgabe. Da die Box mit den LED-Matrizen im Freien oder in wechselnden Umgebungen eingesetzt werden soll, mussten wir das gesamte Konstrukt wetterfest machen. Das Abdichten der Gehäuseübergänge, der Schutz der empfindlichen LED-Fronten vor Feuchtigkeit und das sichere Herausführen der Kabelstränge ohne Wassereintritt erwies sich als handwerklich extrem anspruchsvoll und zeitintensiv.
 
-6. Fazit
+5. Fazit
 
 Trotz der anfänglichen Schwierigkeiten mit der Elektronik, dem Gehäusebau und den buchstäblichen „Schweißperlen“ beim Löten, war das Projekt ein Erfolg. Es ist absolut toll und befriedigend, das fertige Endprojekt nun in Aktion zu sehen – die Arbeit hat sich also sichtlich ausgezahlt.
 
