@@ -44,3 +44,4 @@ Als ob die Elektronik nicht schon genug gewesen wäre, stellte uns das Gehäuse 
 Trotz der anfänglichen Schwierigkeiten mit der Elektronik, dem Gehäusebau und den buchstäblichen „Schweißperlen“ beim Löten, war das Projekt ein Erfolg. Es ist absolut toll und befriedigend, das fertige Endprojekt nun in Aktion zu sehen – die Arbeit hat sich also sichtlich ausgezahlt.
 
 Dennoch steht für uns als Team nach all den strapazierten Nerven, den Fehlversuchen und den verbrannten Fingerspitzen eines unumstößlich fest: Wir werden auf gar keinen Fall noch einmal ein ähnliches Hardware-Projekt auf die Beine stellen. Es war eine wertvolle, einmalige Erfahrung – und einmal reicht uns in diesem Fall völlig.
+Link zum Projektvideo: https://fhgraubuenden-my.sharepoint.com/:f:/g/personal/honeggejanik_fhgr_ch/IgBRggjW-LW3RKEOELglc0lNARquMHsTzMEp6lctjwitsv8?e=pGBDSc
